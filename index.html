@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Tech Stack Analyzer - Find the Perfect Stack for Your Startup</title>
+  <meta name="description" content="Analyze your startup idea and get comprehensive tech stack recommendations with cost comparisons. Find free, paid, and self-hosted options for hosting, database, auth, and more.">
+  <meta name="keywords" content="tech stack, startup tools, free tier, hosting, database, authentication, cost comparison">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+  <!-- Animated Background -->
+  <div class="hero-background"></div>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Tech Stack Analyzer</h1>
+        <p class="hero-subtitle">
+          Analyze your startup idea and discover the perfect technology stack.<br>
+          Compare free, paid, and self-hosted options with real 2026 pricing.
+        </p>
+        <button class="btn btn-primary btn-pulse" id="scrollToAnalyzer">
+          🚀 Analyze Your Idea
+        </button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Analyzer Section -->
+  <section class="section" id="analyzer">
+    <div class="container">
+      <div class="card" style="max-width: 900px; margin: 0 auto;">
+        <h2 class="text-gradient mb-md">Describe Your Application</h2>
+        <p class="mb-xl">Tell us about your app idea and we'll recommend the best tech stack with cost estimates.</p>
+        
+        <form id="analyzerForm">
+          <!-- App Description -->
+          <div class="form-group">
+            <label for="appDescription" class="form-label">
+              📝 What does your app do?
+            </label>
+            <textarea 
+              id="appDescription" 
+              class="form-textarea" 
+              placeholder="Example: A real-time chat application with user authentication, file sharing, AI moderation, and premium subscriptions. Users can create channels, direct message, and share media files..."
+              required
+            ></textarea>
+          </div>
+          
+          <!-- Feature Checklist -->
+          <div class="form-group">
+            <label class="form-label">
+              ✅ Select Required Features
+            </label>
+            <div class="checkbox-group">
+              <label class="checkbox-item">
+                <input type="checkbox" name="feature" value="auth" id="feature-auth">
+                <span>🔐 Authentication</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="feature" value="database" id="feature-database" checked>
+                <span>💾 Database</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="feature" value="storage" id="feature-storage">
+                <span>📁 File Storage</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="feature" value="payments" id="feature-payments">
+                <span>💳 Payments</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="feature" value="realtime" id="feature-realtime">
+                <span>⚡ Realtime</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="feature" value="email" id="feature-email">
+                <span>📧 Email</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="feature" value="ai" id="feature-ai">
+                <span>🤖 AI Services</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="feature" value="monitoring" id="feature-monitoring">
+                <span>📊 Monitoring</span>
+              </label>
+            </div>
+          </div>
+          
+          <!-- Expected Scale -->
+          <div class="form-group">
+            <label for="expectedScale" class="form-label">
+              📈 Expected Scale (Initial)
+            </label>
+            <select id="expectedScale" class="form-input">
+              <option value="small">Small (100-1K users)</option>
+              <option value="medium" selected>Medium (1K-10K users)</option>
+              <option value="large">Large (10K+ users)</option>
+            </select>
+          </div>
+          
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary" id="analyzeBtn" style="width: 100%;">
+            <span id="btnText">🔍 Analyze Tech Stack</span>
+            <div class="loading-spinner hidden" id="btnSpinner" style="width: 20px; height: 20px; border-width: 2px;"></div>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Results Section -->
+  <section class="section hidden" id="resultsSection">
+    <div class="container">
+      
+      <!-- Component Breakdown -->
+      <div class="mb-2xl">
+        <h2 class="text-gradient text-center mb-lg">🔧 Tech Stack Components</h2>
+        <p class="text-center mb-xl text-secondary">Here's what your application needs</p>
+        <div class="grid grid-3" id="componentsGrid"></div>
+      </div>
+      
+      <!-- Stack Recommendations -->
+      <div class="mb-2xl">
+        <h2 class="text-gradient text-center mb-lg">📦 Recommended Stacks</h2>
+        <p class="text-center mb-xl text-secondary">Three carefully curated stacks for different needs</p>
+        <div class="grid grid-3" id="stacksGrid"></div>
+      </div>
+      
+      <!-- Cost Comparison -->
+      <div class="mb-2xl">
+        <div class="card" style="max-width: 900px; margin: 0 auto;">
+          <h3 class="text-gradient mb-lg">💰 Cost Comparison</h3>
+          <div id="costComparison"></div>
+        </div>
+      </div>
+      
+      <!-- Optimization Tips -->
+      <div class="mb-2xl">
+        <div class="card" style="max-width: 900px; margin: 0 auto;">
+          <h3 class="text-gradient mb-lg">💡 Optimization Tips</h3>
+          <div id="optimizationTips"></div>
+        </div>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="text-center mt-2xl">
+        <button class="btn btn-primary" id="analyzeAnother">
+          🔄 Analyze Another Idea
+        </button>
+        <button class="btn btn-secondary" id="copyResults">
+          📋 Copy Results
+        </button>
+      </div>
+      
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="section" style="padding: var(--spacing-xl) 0; border-top: 1px solid rgba(255, 255, 255, 0.05);">
+    <div class="container text-center">
+      <p style="color: var(--text-muted); margin: 0;">
+        Built with 💜 for startup founders • Data accurate as of Feb 2026
+      </p>
+    </div>
+  </footer>
+  
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+  
+</body>
+</html>
